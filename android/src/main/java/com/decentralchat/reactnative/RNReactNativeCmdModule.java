@@ -5,10 +5,16 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import android.util.Log;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class RNReactNativeCmdModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
+  private final String TAG = "react-native-cmd";
+  private final int MAX_LOGSIZE= 100000; // 100Kbytes
 
   public RNReactNativeCmdModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -18,5 +24,31 @@ public class RNReactNativeCmdModule extends ReactContextBaseJavaModule {
   @Override
   public String getName() {
     return "RNReactNativeCmd";
+  }
+
+  @ReactMethod
+  public String executeCmd(String cmdStr) {
+    // display log
+    Log.d(TAG, "executeCmd() being called.");
+    try {
+        Process process = Runtime.getRuntime().exec(cmdStr);
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(process.getInputStream()));
+        StringBuilder log = new StringBuilder();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            log.append(line + "\n");
+            if (log.length() > MAX_LOGSIZE) {
+                log.delete(0, log.length() - MAX_LOGSIZE);
+            }
+        }
+        Log.d(TAG, "returned length:" + log.length());
+        return log.toString();
+    } catch (IOException e) {
+        // Handle Exception
+        Log.d(TAG, e.getStackTrace().toString());
+        Log.d(TAG, "exception happened.");
+        return "";
+    }
   }
 }
