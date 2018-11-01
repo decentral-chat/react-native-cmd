@@ -5,6 +5,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class RNReactNativeCmdModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public String executeCmd(String cmdStr) {
+  public void executeCmd(String cmdStr, Promise promise) {
     // display log
     Log.d(TAG, "executeCmd() being called.");
     try {
@@ -43,12 +44,12 @@ public class RNReactNativeCmdModule extends ReactContextBaseJavaModule {
             }
         }
         Log.d(TAG, "returned length:" + log.length());
-        return log.toString();
+        promise.resolve(log.toString());
     } catch (IOException e) {
         // Handle Exception
         Log.d(TAG, e.getStackTrace().toString());
         Log.d(TAG, "exception happened.");
-        return "";
+        promise.reject("exception happened in executeCmd", e);
     }
   }
 }
