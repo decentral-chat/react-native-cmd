@@ -60,3 +60,4 @@ export default class App extends Component<Props> {
 ```
   
 ## Notes
+If the command result exceed 100Kbytes, only the last 100Kbytes size of string will be returned.

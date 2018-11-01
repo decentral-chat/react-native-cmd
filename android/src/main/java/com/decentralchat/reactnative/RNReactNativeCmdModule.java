@@ -15,7 +15,7 @@ public class RNReactNativeCmdModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
   private final String TAG = "react-native-cmd";
-  private final int MAX_LOGSIZE= 100000; // 100Kbytes
+  private final int MAX_LOGSIZE= 102400; // 100Kbytes
 
   public RNReactNativeCmdModule(ReactApplicationContext reactContext) {
     super(reactContext);
