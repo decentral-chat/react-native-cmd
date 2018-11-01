@@ -1,8 +1,9 @@
 
 {
   "name": "react-native-cmd",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "react native command line module, execute command on android and return result to javascript",
+  "homepage": "https://github.com/decentral-chat/react-native-cmd",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +11,12 @@
   "keywords": [
     "react-native"
   ],
-  "author": "",
-  "license": "",
+  "author": {
+    "name" : "Yuanzhang Hu",
+    "email" : "huyuanzhang@gmail.com",
+    "url" : "https://github.com/yuanzhanghu"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "^0.41.2"
   }
